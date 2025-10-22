@@ -93,19 +93,3 @@ Below is a high-level mapping of what each step in the workflow does and why it'
   - The `ssh-deploy` step uses `--delete`. Review the `EXCLUDE` variable in the workflow to ensure important directories are excluded from sync.
 
 If logs are needed, open the Actions run in GitHub and inspect each step's output. The SSH actions print remote script stdout/stderr which helps diagnose issues.
-
-## Suggested improvements (optional)
-
-- Add `workflow_dispatch` for manual triggers without changing branch rules.
-- Create a dedicated deploy user on the VPS with limited sudo privileges.
-- Improve backups: run a DB dump before migrations and upload it to a safe place (S3, another server).
-- Use a release directory pattern (e.g., `/var/www/releases/<timestamp>`) + symlink current to support quick rollbacks.
-- Add health-check step after deployment (curl the app URL and verify a 200 response).
-
-## Quick checklist before enabling on production
-
-- [ ] Add all required GitHub secrets
-- [ ] Ensure the SSH key works from an external machine
-- [ ] Backup production database
-- [ ] Test on staging (or change to `workflow_dispatch` for manual runs)
-- [ ] Remove `php artisan migrate --force` from the workflow if you prefer manual database updates
